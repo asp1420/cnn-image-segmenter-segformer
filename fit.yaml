@@ -1,0 +1,27 @@
+trainer:
+  accelerator: gpu
+  devices: 1
+  max_epochs: 10
+  precision: 16-mixed
+  callbacks:
+    - class_path: lightning.pytorch.callbacks.ModelCheckpoint
+      init_args:
+        filename: seg
+        monitor: val_loss_epoch
+        save_weights_only: True
+        mode: min
+        verbose: True
+  logger:
+    - class_path: lightning.pytorch.loggers.TensorBoardLogger
+      init_args:
+        save_dir: /home/home/Documents/Code/cnn-image-segmenter-segformer/ckpt/
+
+model:
+  learning_rate: 0.0001
+  num_classes: 1
+
+data:
+  path: /data/path
+  input_size: 256
+  batch_size: 1
+  num_workers: 4
